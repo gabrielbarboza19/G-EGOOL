@@ -1,0 +1,61 @@
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #000000;
+      overflow: hidden;
+      user-select: none;
+      cursor: crosshair;
+    }
+    .stage {
+      position: fixed;
+      inset: 0;
+    }
+    .viewport {
+      position: relative;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+    .base-img {
+      display: block;
+      max-width: none;
+      pointer-events: none;
+    }
+    canvas.drawing {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: transparent;
+      pointer-events: auto;
+    }
+    .hint { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); font: 12px/1.2 system-ui, sans-serif; opacity: .35; }
+
+    .marker {
+  position: absolute;
+  width: 24px;
+  height: 35px;
+  transform: translate(-50%, -100%); /* punta hacia el punto */
+  transition: transform 0.2s ease;
+  transform-origin: center center;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.marker img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+.marker:hover {
+  transform: scale(1.09) translate(-50%, -100% );
+}
+
+/* Triángulo animado señalador */
+.selected-indicator {
+  position: absolute;
+  width: 42px;
+  height: 45px;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+  z-index: 99999;
+}
