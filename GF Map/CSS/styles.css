@@ -85,7 +85,7 @@ canvas.drawing {
 
 .modal-content {
   width: 400px;
-  background: rgb(255, 255, 255);
+  background: rgba(255, 255, 255, 0.878);
   color: rgb(0, 0, 0);
   font-family: Arial, Helvetica, sans-serif;
   padding-left: 20px;
@@ -141,7 +141,7 @@ canvas.drawing {
     right: 0;
     width: 350px;
     height: 100vh;
-    background: url("../img_gfmaps/background1.png");
+    background: #210000d4;
     color: white;
     padding: 25px;
     box-shadow: -4px 0 12px rgba(0,0,0,0.6);
