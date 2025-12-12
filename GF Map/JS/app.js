@@ -1,4 +1,4 @@
-// === GF MAPS — Versión con selección, hover y triángulo ===
+// === GF MAPS — Versión completa con selección + modal + imágenes + estrellas ===
 
 const IMAGE_URL = '../img_gfmaps/Mapa de Gran Fortuna.png';
 const MARKER_URL = '../img_gfmaps/icon_marker.png';
@@ -15,8 +15,21 @@ const img = document.getElementById('baseImg');
 const canvas = document.getElementById('layer');
 const ctx = canvas.getContext('2d');
 
+// === Modal ===
+const modal = document.getElementById("markerModal");
+const modalContent = document.querySelector("#markerModal .modal-content");
+
+const inputTitle = document.getElementById("markerTitle");
+const inputDesc = document.getElementById("markerDescription");
+const inputImages = document.getElementById("markerImages");
+const preview = document.getElementById("imagePreview");
+const starBox = document.getElementById("starRating");
+
+let tempMarker = null;
+let selectedStars = 0;
+
 // estado
-let scale = 0.14;
+let scale = 0.13;
 let translateX = 0;
 let translateY = 0;
 let isPanning = false;
@@ -44,8 +57,6 @@ img.onload = () => {
   canvas.height = Math.round(h * dpr);
 
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
 
   centerMap(w, h);
   loadMarkers();
@@ -56,7 +67,7 @@ img.src = IMAGE_URL;
 // === Centrar mapa al inicio ===
 function centerMap(w, h) {
   const rect = document.body.getBoundingClientRect();
-  translateX = (rect.width - w * scale) / 2;
+  translateX = 150; // <-- mapa más a la izquierda
   translateY = (rect.height - h * scale) / 2;
   applyTransform();
 }
@@ -72,6 +83,28 @@ function screenToWorld(x, y) {
     x: (x - translateX) / scale,
     y: (y - translateY) / scale
   };
+}
+
+// === Scroll suave del mapa ===
+function smoothPan(dx, duration = 300) {
+  const startX = translateX;
+  const targetX = translateX + dx;
+  const startTime = performance.now();
+
+  function animate(time) {
+    const progress = Math.min((time - startTime) / duration, 1);
+    const eased = progress < 0.5
+      ? 2 * progress * progress
+      : -1 + (4 - 2 * progress) * progress;
+
+    translateX = startX + (targetX - startX) * eased;
+    applyTransform();
+    redrawMarkers();
+
+    if (progress < 1) requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
 }
 
 // === Mouse Down ===
@@ -133,13 +166,39 @@ window.addEventListener('wheel', e => {
 
 // === Crear marcador ===
 function createMarker(x, y) {
-  markers.push({ x, y });
+  const marker = {
+    x,
+    y,
+    title: "",
+    description: "",
+    stars: 0,
+    images: []
+  };
+
+  markers.push(marker);
   saveMarkers();
   redrawMarkers();
+
+  openMarkerModal(marker);
 }
 
 // === Seleccionar marcador ===
 function selectMarker(index) {
+
+  // ➤ Si hago click en el marcador ya seleccionado: deseleccionar
+  if (selectedMarkerIndex === index) {
+    selectedMarkerIndex = null;
+
+    if (triangleIndicator) {
+      triangleIndicator.remove();
+      triangleIndicator = null;
+    }
+
+    modal.classList.add("hidden");
+    return;
+  }
+
+  // ➤ Seleccionar nuevo marcador
   selectedMarkerIndex = index;
 
   if (!triangleIndicator) {
@@ -150,26 +209,109 @@ function selectMarker(index) {
   }
 
   const m = markers[index];
-  const screenX = m.x;
-  const screenY = m.y;
+  triangleIndicator.style.left = m.x + 'px';
+  triangleIndicator.style.top = (m.y - 30) + 'px';
 
-  triangleIndicator.style.left = screenX + 'px';
-  triangleIndicator.style.top = (screenY - 30) + 'px';
+  // === MOVER MAPA SUAVEMENTE 200px A LA DERECHA ===
+  smoothPan(200);
 
-  openMarkerEditor(index);
+  openMarkerModal(m);
 }
 
-// === Abrir editor (por ahora solo placeholder) ===
-function openMarkerEditor(index) {
-  console.log("Abrir modal del marcador:", index);
+// === Modal ===
+function openMarkerModal(marker) {
+  tempMarker = marker;
+
+  inputTitle.value = marker.title || "";
+  inputDesc.value = marker.description || "";
+  selectedStars = marker.stars || 0;
+
+  paintStars();
+
+  inputImages.value = "";
+  preview.innerHTML = "";
+
+  if (marker.images && marker.images.length > 0) {
+    marker.images.forEach(url => {
+      const img = document.createElement("img");
+      img.src = url;
+      preview.appendChild(img);
+    });
+  }
+
+  modal.classList.remove("hidden");
+}
+
+// === Cerrar modal manual ===
+document.getElementById("cancelMarker").onclick = () => {
+  modal.classList.add("hidden");
+};
+
+// === Cerrar modal haciendo click fuera ===
+window.addEventListener("click", (e) => {
+  if (!modal.classList.contains("hidden")) {
+    if (!modalContent.contains(e.target)) {
+      modal.classList.add("hidden");
+    }
+  }
+});
+
+// === Guardar datos del marcador ===
+document.getElementById("saveMarker").onclick = () => {
+  if (!tempMarker) return;
+
+  tempMarker.title = inputTitle.value.trim();
+  tempMarker.description = inputDesc.value.trim();
+  tempMarker.stars = selectedStars;
+
+  const newImages = [...inputImages.files].map(file =>
+    URL.createObjectURL(file)
+  );
+
+  tempMarker.images = [...tempMarker.images, ...newImages];
+
+  saveMarkers();
+  redrawMarkers();
+
+  modal.classList.add("hidden");
+};
+
+// === Previsualizar imágenes ===
+inputImages.addEventListener("change", () => {
+  preview.innerHTML = "";
+  [...inputImages.files].forEach(file => {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    preview.appendChild(img);
+  });
+});
+
+// === Estrellas ===
+starBox.addEventListener("mousemove", e => {
+  const rect = starBox.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const starIndex = Math.ceil((x / rect.width) * 5);
+  paintStars(starIndex);
+});
+
+starBox.addEventListener("mouseleave", () => paintStars());
+
+starBox.addEventListener("click", e => {
+  const rect = starBox.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  selectedStars = Math.ceil((x / rect.width) * 5);
+  paintStars();
+});
+
+function paintStars(hover = 0) {
+  const count = hover || selectedStars;
+  starBox.textContent = "★★★★★".slice(0, count) + "☆☆☆☆☆".slice(count);
 }
 
 // === Redibujar marcadores ===
 function redrawMarkers() {
-  // eliminar marcadores anteriores
   viewport.querySelectorAll('.marker').forEach(m => m.remove());
 
-  // dibujar nuevos
   markers.forEach((m, index) => {
     const marker = document.createElement('img');
     marker.src = MARKER_URL;
@@ -178,16 +320,14 @@ function redrawMarkers() {
     marker.style.left = m.x + 'px';
     marker.style.top = m.y + 'px';
 
-    // click izquierdo en marcador
     marker.onclick = (e) => {
-      e.stopPropagation();
-      selectMarker(index);
+        e.stopPropagation();
+        selectMarker(index);
     };
 
     viewport.appendChild(marker);
   });
 
-  // reposicionar triángulo si existe
   if (triangleIndicator && selectedMarkerIndex !== null) {
     const m = markers[selectedMarkerIndex];
     triangleIndicator.style.left = m.x + 'px';
@@ -195,12 +335,12 @@ function redrawMarkers() {
   }
 }
 
-// === Guardar ===
+// === Guardar todos los marcadores ===
 function saveMarkers() {
   localStorage.setItem('gfmaps_markers', JSON.stringify(markers));
 }
 
-// === Cargar ===
+// === Cargar todos los marcadores ===
 function loadMarkers() {
   const data = localStorage.getItem('gfmaps_markers');
   if (data) markers = JSON.parse(data);
@@ -220,5 +360,27 @@ function clearAllMarkers() {
   redrawMarkers();
 }
 
-// bloquear menú del click derecho
+// === Desactivar zoom dentro del panel lateral ===
+const sidePanel = document.getElementById("side-panel");
+
+if (sidePanel) {
+  sidePanel.addEventListener("wheel", (e) => {
+    e.stopPropagation();   // evita que el scroll llegue al zoom del mapa
+  }, { passive: false });
+}
+
+// === Borrar todos los marcadores ===
+function clearAllMarkers() {
+  markers = [];
+  localStorage.removeItem('gfmaps_markers');
+
+  if (triangleIndicator) {
+    triangleIndicator.remove();
+    triangleIndicator = null;
+    selectedMarkerIndex = null;
+  }
+
+  redrawMarkers();
+}
+
 window.addEventListener('contextmenu', e => e.preventDefault());

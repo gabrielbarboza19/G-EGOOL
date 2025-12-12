@@ -13,7 +13,111 @@
       <img id="baseImg" class="base-img" alt="Imagen base" />
       <canvas id="layer" class="drawing"></canvas>
     </div>
+    <!-- ================= MODAL DE MARCADOR ================= -->
+    <div id="markerModal" class="modal hidden">
+        <div class="modal-content">
+    
+        <h2>Nuevo Marcador</h2>
+
+        <!-- Nombre -->
+        <label>Título del marcador:</label>
+        <input id="markerTitle" type="text" placeholder="Ej: Mina antigua, cueva secreta, etc.">
+
+        <!-- Descripción -->
+        <label>Descripción:</label>
+        <textarea id="markerDescription" rows="3" placeholder="Escribe detalles aquí..."></textarea>
+
+        <!-- Sistema de estrellas -->
+        <label>Importancia:</label>
+        <div class="stars" id="starRating">
+          ★★★★★
+        </div>
+
+        <!-- Imagenes -->
+        <label>Imágenes (opcional):</label>
+        <input id="markerImages" type="file" accept="image/*" multiple>
+
+        <div id="imagePreview" class="img-preview"></div>
+
+        <!-- Botones -->
+        <div class="modal-buttons">
+            <button id="cancelMarker">Cancelar</button>
+            <button id="saveMarker" class="confirm">Guardar</button>
+        </div>
+    </div>
+    </div>
   </div>
+  <div id="side-panel" class="panel">
+
+    <h2 class="panel-title">GRAN FORTUNA</h2>
+
+    <div class="panel-scroll">
+
+        <!-- LOCALES -->
+        <h3 class="group-title">LOCALES</h3>
+        <ul class="category-list">
+            <li>Tiendas de armas ilegales</li>
+            <li>Maxikioscos</li>
+            <li>Tiendas de explosivos</li>
+            <li>Estaciones de bomberos</li>
+            <li>Ferreterias</li>
+            <li>Hospitales</li>
+            <li>Garages de pintura</li>
+            <li>Puntos de interes</li>
+            <li>Estaciones de Policia</li>
+            <li>Posilgas (casas seguras)</li>
+        </ul>
+
+        <!-- COLECCIONABLES -->
+        <h3 class="group-title">COLECCIONABLES</h3>
+        <ul class="category-list">
+            <li>Grafitis</li>
+            <li>Panfletos de películas olvidadas</li>
+            <li>DVDs o Cintas de musica</li>
+            <li>Cráneos humanos</li>
+            <li>La Mascara del Dentudo</li>
+            <li>Saltos Imposibles</li>
+        </ul>
+
+        <!-- TRABAJOS -->
+        <h3 class="group-title">TRABAJOS</h3>
+        <ul class="category-list">
+            <li>Misiones de chofferes</li>
+            <li>Misiones de bomberos</li>
+            <li>Misiones de Paramédicos</li>
+            <li>Teléfonos públicos</li>
+            <li>Suministros</li>
+            <li>Masacres</li>
+            <li>Partidos de futbol</li>
+            <li>Carreras Ilegales</li>
+            <li>Misiones de taxista</li>
+            <li>Misiones de vigilante</li>
+        </ul>
+
+        <!-- OBJETOS -->
+        <h3 class="group-title">OBJETOS</h3>
+        <ul class="category-list">
+            <li>Drogas</li>
+            <li>Chaleco Antibalas</li>
+            <li>Contenedores de sobornos</li>
+            <li>Ropa</li>
+            <li>Curas</li>
+            <li>Armas para fabricar</li>
+        </ul>
+
+        <!-- OTROS -->
+        <h3 class="group-title">OTROS</h3>
+        <ul class="category-list">
+            <li>Easter Egg</li>
+            <li>Miscellaneous</li>
+            <li>Ubicacion de Vehiculos</li>
+        </ul>
+        <br><br><br>
+
+        </div>
+    </div>
+
+
   <button onclick="clearAllMarkers()" style="position:fixed; top:20px; right:20px; z-index:9999;">Borrar marcadores</button>
   <div class="hint"></div>
   <script src="../JS/app.js"></script>

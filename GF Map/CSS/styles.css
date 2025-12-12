@@ -1,43 +1,32 @@
-    html, body {
-      height: 100%;
-      margin: 0;
-      background-color: #000000;
-      overflow: hidden;
-      user-select: none;
-      cursor: crosshair;
-    }
-    .stage {
-      position: fixed;
-      inset: 0;
-    }
-    .viewport {
-      position: relative;
-      transform-origin: 0 0;
-      will-change: transform;
-    }
-    .base-img {
-      display: block;
-      max-width: none;
-      pointer-events: none;
-    }
-    canvas.drawing {
-      position: absolute;
-      left: 0;
-      top: 0;
-      background: transparent;
-      pointer-events: auto;
-    }
-    .hint { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); font: 12px/1.2 system-ui, sans-serif; opacity: .35; }
+html, body {
+  height: 100%;
+  margin: 0;
+  background: url("../img_gfmaps/background.png");
+  overflow: hidden;
+  user-select: none;
+  cursor: crosshair;
+}
 
-    .marker {
-  position: absolute;
-  width: 24px;
-  height: 35px;
-  transform: translate(-50%, -100%); /* punta hacia el punto */
-  transition: transform 0.2s ease;
-  transform-origin: center center;
-  pointer-events: auto;
-  cursor: pointer;
+.stage {
+  position: fixed;
+  inset: 0;
+}
+
+.viewport {
+  position: relative;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.base-img {
+  display: block;
+  max-width: none;
+  pointer-events: none;
+}
+canvas.drawing {position: absolute; left: 70%; top: 0; background: transparent; pointer-events: auto;}
+.hint { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); font: 12px/1.2 system-ui, sans-serif; opacity: .35; }
+
+.marker {position: absolute;width: 24px;height: 35px;transform: translate(-50%, -100%); /* punta hacia el punto */transition: transform 0.2s ease;transform-origin: center center;
+  pointer-events: auto;cursor: pointer;
 }
 .marker img {
   width: 100%;
@@ -58,4 +47,140 @@
   transform: translate(-50%, -100%);
   pointer-events: none;
   z-index: 99999;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  z-index: 2000;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modal-content {
+  width: 500px;
+  background: #180e0e;
+  color: rgb(255, 255, 255);
+  padding: 20px;
+  box-shadow: 0 0 20px black;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  margin: 6px 0 14px 0;
+  padding: 8px;
+  padding-right: 8px;
+  border-radius: 6px;
+  border: 1px solid #180e0e;
+  background: #180e0e;
+  color: white;
+}
+
+.stars {
+  font-size: 28px;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 14px;
+}
+
+.img-preview img {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  object-fit: cover;
+  margin-right: 6px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons .confirm {
+  background: limegreen;
+  color: black;
+}
+.modal-buttons .cancel {
+  background: crimson;
+  color: white;
+}
+
+/* Panel lateral fijo */
+.panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100vh;
+    background: #180e0e;
+    color: white;
+    padding: 25px;
+    box-shadow: -4px 0 12px rgba(0,0,0,0.6);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título principal */
+.panel-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ff7d7d;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Scroll interno */
+.panel-scroll {
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.panel-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.panel-scroll::-webkit-scrollbar-thumb {
+    background: #4a2c2c;
+    border-radius: 10px;
+}
+
+/* Títulos de grupo */
+.group-title {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffa1a1;
+    border-bottom: 1px solid #2e2333;
+    padding-bottom: 6px;
+    text-transform: uppercase;
+}
+
+/* Listado de categorías */
+.category-list {
+    list-style: none;
+    padding-left: 10px;
+    margin: 8px 0 10px 0;
+}
+
+.category-list li {
+    padding: 6px 0;
+    cursor: pointer;
+    border-bottom: 1px solid #1e1822;
+    transition: 0.2s;
+}
+
+.category-list li:hover {
+    padding-left: 4px;
+    color: #ff7d7d;
+}
+.category-list li.active {
+    color: #ff7d7d;
+    font-weight: bold;
 }
