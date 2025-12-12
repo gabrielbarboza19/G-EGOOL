@@ -29,7 +29,7 @@ let tempMarker = null;
 let selectedStars = 0;
 
 // estado
-let scale = 0.13;
+let scale = 0.1;
 let translateX = 0;
 let translateY = 0;
 let isPanning = false;
@@ -217,6 +217,26 @@ function selectMarker(index) {
 
   openMarkerModal(m);
 }
+
+// === Click fuera de marcadores → deseleccionar ===
+window.addEventListener("click", (e) => {
+
+  // Si el modal está abierto y se hace click fuera del modal, no deseleccionar aquí (ya lo manejas arriba)
+  if (!modal.classList.contains("hidden")) return;
+
+  // Si el click NO es sobre un marcador
+  if (!e.target.classList.contains("marker")) {
+    selectedMarkerIndex = null;
+
+    if (triangleIndicator) {
+      triangleIndicator.remove();
+      triangleIndicator = null;
+    }
+
+    modal.classList.add("hidden");
+    redrawMarkers();
+  }
+});
 
 // === Modal ===
 function openMarkerModal(marker) {

@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="../CSS/styles.css" />
   <link rel="icon" type="image/png" href="../img_gfmaps/1icon1.png">
 </head>
+
+
+
 <body>
   <div class="stage">
     <div id="viewport" class="viewport">
@@ -16,12 +19,66 @@
     <!-- ================= MODAL DE MARCADOR ================= -->
     <div id="markerModal" class="modal hidden">
         <div class="modal-content">
-    
         <h2>Nuevo Marcador</h2>
-
+        <hr><br>
         <!-- Nombre -->
         <label>Título del marcador:</label>
         <input id="markerTitle" type="text" placeholder="Ej: Mina antigua, cueva secreta, etc.">
+
+        <label>Categoría:</label>
+          <select id="markerCategory">
+            <option value="">Seleccionar categoría</option>
+
+            <optgroup label="LOCALES">
+              <option>Tiendas de armas ilegales</option>
+              <option>Maxikioscos</option>
+              <option>Tiendas de explosivos</option>
+              <option>Estaciones de bomberos</option>
+              <option>Ferreterias</option>
+              <option>Hospitales</option>
+              <option>Garages de pintura</option>
+              <option>Puntos de interes</option>
+              <option>Estaciones de Policia</option>
+              <option>Posilgas (casas seguras)</option>
+            </optgroup>
+
+            <optgroup label="COLECCIONABLES">
+              <option>Grafitis</option>
+              <option>Panfletos de películas olvidadas</option>
+              <option>DVDs o Cintas de musica</option>
+              <option>Cráneos humanos</option>
+              <option>La Mascara del Dentudo</option>
+              <option>Saltos Imposibles</option>
+            </optgroup>
+
+            <optgroup label="TRABAJOS">
+              <option>Misiones de chofferes</option>
+              <option>Misiones de bomberos</option>
+              <option>Misiones de Paramédicos</option>
+              <option>Teléfonos públicos</option>
+              <option>Suministros</option>
+              <option>Masacres</option>
+              <option>Partidos de futbol</option>
+              <option>Carreras Ilegales</option>
+              <option>Misiones de taxista</option>
+              <option>Misiones de vigilante</option>
+            </optgroup>
+
+            <optgroup label="OBJETOS">
+              <option>Drogas</option>
+              <option>Chaleco Antibalas</option>
+              <option>Contenedores de sobornos</option>
+              <option>Ropa</option>
+              <option>Curas</option>
+              <option>Armas para fabricar</option>
+            </optgroup>
+
+            <optgroup label="OTROS">
+              <option>Easter Egg</option>
+              <option>Miscellaneous</option>
+              <option>Ubicacion de Vehiculos</option>
+            </optgroup>
+          </select>
 
         <!-- Descripción -->
         <label>Descripción:</label>
@@ -56,16 +113,24 @@
         <!-- LOCALES -->
         <h3 class="group-title">LOCALES</h3>
         <ul class="category-list">
-            <li>Tiendas de armas ilegales</li>
-            <li>Maxikioscos</li>
+            <li>Casas seguras</li>
+            <li>Tiendas de ropa</li>
+            <li>Tiendas de tatuajes</li>
+            <li>Tiendas de comida rápida</li>
             <li>Tiendas de explosivos</li>
+            <li>Maxikioscos</li>
+            <li>Supermercados</li>
+            <li>Bares</li>
+            <li>Restaurantes</li>
+            <li>Clubes nocturnos</li>
+            <li>Hoteles</li>
             <li>Estaciones de bomberos</li>
+            <li>Estaciones de Policia</li>
             <li>Ferreterias</li>
             <li>Hospitales</li>
             <li>Garages de pintura</li>
             <li>Puntos de interes</li>
-            <li>Estaciones de Policia</li>
-            <li>Posilgas (casas seguras)</li>
+            <li>Entradas al Mercado Negro</li>
         </ul>
 
         <!-- COLECCIONABLES -->
@@ -122,4 +187,5 @@
   <div class="hint"></div>
   <script src="../JS/app.js"></script>
 </body>
+
 </html>
