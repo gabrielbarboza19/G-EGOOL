@@ -97,3 +97,34 @@ window.paintStars = function (hover = 0) {
   starBox.textContent = "★★★★★".slice(0, count) +
                         "☆☆☆☆☆".slice(count);
 };
+// === ABRIR VISTA DE MARCADOR ===
+window.openMarkerView = function(marker) {
+    const modal = document.getElementById("markerViewModal");
+
+    document.getElementById("viewTitle").textContent = marker.title || "Sin título";
+    document.getElementById("viewDescription").textContent = marker.description || "Sin descripción";
+    document.getElementById("viewCategory").textContent = marker.category || "Sin categoría";
+    document.getElementById("viewStars").textContent = "★".repeat(marker.stars || 0);
+
+    const imgBox = document.getElementById("viewImages");
+    imgBox.innerHTML = "";
+
+    if (marker.images && marker.images.length) {
+        marker.images.forEach(base64 => {
+            const img = document.createElement("img");
+            img.src = base64;
+            img.className = "thumb";
+            imgBox.appendChild(img);
+        });
+    }
+
+    modal.classList.remove("hidden");
+};
+document.getElementById("closeViewModal").addEventListener("click", () => {
+    document.getElementById("markerViewModal").classList.add("hidden");
+});
+document.getElementById("deleteThisMarker").addEventListener("click", () => {
+    if (window.currentOpenedMarker) {
+        deleteMarkerById(window.currentOpenedMarker.id);
+    }
+});

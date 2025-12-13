@@ -24,3 +24,7 @@ window.redrawMarkers = function () {
     triangleIndicator.style.top = (m.y - 30) + 'px';
   }
 };
+markerElement.addEventListener("click", () => {
+    window.currentOpenedMarker = m;
+    openMarkerView(m);
+});

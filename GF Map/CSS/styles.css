@@ -100,8 +100,8 @@ canvas.drawing {
   padding: 8px;
   margin-right: 20px;
   border-radius: 6px;
-  border: 1px solid #909090;
-  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.878);
+  background: rgba(255, 255, 255, 0.878);
   color: rgb(0, 0, 0);
 }
 

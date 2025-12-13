@@ -10,7 +10,7 @@ window.canvas = document.getElementById('layer');
 window.ctx = canvas.getContext('2d');
 
 // === estado de transformaciones ===
-window.scale = 0.1;
+window.scale = 0.135;
 window.MIN_SCALE = 0.1;
 window.MAX_SCALE = 8;
 window.ZOOM_STEP = 1.1;

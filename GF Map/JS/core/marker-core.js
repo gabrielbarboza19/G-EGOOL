@@ -92,3 +92,10 @@ window.addEventListener("click", e => {
     redrawMarkers();
   }
 });
+window.deleteMarkerById = function(id) {
+    const markers = loadMarkers().filter(m => m.id !== id);
+    saveMarkers(markers);
+
+    renderAllMarkers();
+    document.getElementById("markerViewModal").classList.add("hidden");
+};

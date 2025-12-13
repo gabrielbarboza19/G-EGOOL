@@ -11,12 +11,15 @@
 
 
 <body>
+
   <div class="stage">
     <div id="viewport" class="viewport">
       <img id="baseImg" class="base-img" alt="Imagen base" />
       <canvas id="layer" class="drawing"></canvas>
     </div>
+
     <!-- ================= MODAL DE MARCADOR ================= -->
+
     <div id="markerModal" class="modal hidden">
         <div class="modal-content">
         <h2>Nuevo Marcador</h2>
@@ -103,6 +106,23 @@
         </div>
     </div>
     </div>
+
+    <div id="markerViewModal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="viewTitle"></h2>
+        <p id="viewDescription"></p>
+        <p><strong>Categoría:</strong> <span id="viewCategory"></span></p>
+        <p><strong>Importancia:</strong> <span id="viewStars"></span></p>
+
+        <div id="viewImages" class="img-preview"></div>
+
+          <div class="modal-buttons">
+            <button id="closeViewModal">Cerrar</button>
+            <button id="deleteThisMarker" class="confirm">Eliminar marcador</button>
+          </div>
+        </div>
+    </div>
+
   </div>
   <div id="side-panel" class="panel">
 
