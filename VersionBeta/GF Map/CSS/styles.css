@@ -100,13 +100,13 @@ canvas.drawing {
   padding: 8px;
   margin-right: 20px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.878);
+  border: 1px solid rgba(214, 214, 214, 0.878);
   background: rgba(255, 255, 255, 0.878);
   color: rgb(0, 0, 0);
 }
 
 .stars {
-  font-size: 50px;
+  font-size: 70px;
   cursor: pointer;
   user-select: none;
   margin-bottom: 14px;
@@ -136,19 +136,19 @@ canvas.drawing {
 
 /* Panel lateral fijo */
 .panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 350px;
-    height: 100vh;
-    background: #210000d4;
-    color: white;
-    padding: 25px;
-    box-shadow: -4px 0 12px rgba(0,0,0,0.6);
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    cursor: default;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
+  background: #000000d4;
+  color: white;
+  padding: 25px;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.6);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
 }
 
 /* Título principal */
